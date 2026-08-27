@@ -1,0 +1,770 @@
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Logbook">
+<meta name="theme-color" content="#0C171B">
+<style>html,body{margin:0;background:#0C171B;min-height:100%}</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Family Documentary Logbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C171B;
+  --ink2:#12242A;
+  --card:#16292F;
+  --edge:#223E45;
+  --text:#E6EEE9;
+  --dim:#8CA6A5;
+  --amber:#E9A23B;
+  --sea:#6FB6A3;
+  --rust:#C4593C;
+  --stamp:#D8623F;
+  --disp:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--ink);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 80px}
+
+/* ---------- masthead ---------- */
+.mast{padding:34px 0 20px;border-bottom:1px solid var(--edge)}
+.eyebrow{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--amber);margin:0 0 10px
+}
+.mast h1{
+  font-family:var(--disp);font-weight:800;font-size:clamp(30px,7vw,54px);
+  line-height:.98;letter-spacing:-.02em;margin:0 0 12px;
+  font-stretch:condensed;
+}
+.mast h1 em{font-style:normal;color:var(--sea)}
+.lede{color:var(--dim);max-width:60ch;margin:0;font-size:14.5px}
+
+/* ---------- tally ---------- */
+.tally{display:flex;gap:0;flex-wrap:wrap;margin:20px 0 0;border:1px solid var(--edge);border-radius:3px;overflow:hidden}
+.tally div{flex:1 1 90px;padding:11px 13px;border-right:1px solid var(--edge);background:var(--ink2)}
+.tally div:last-child{border-right:0}
+.tally b{display:block;font-family:var(--mono);font-size:20px;font-weight:700;color:var(--amber);line-height:1.1}
+.tally span{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim)}
+
+/* ---------- controls ---------- */
+.controls{position:sticky;top:0;z-index:30;background:var(--ink);padding:12px 0 10px;border-bottom:1px solid var(--edge);margin-bottom:22px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input[type=search]{
+  flex:1 1 190px;min-width:0;background:var(--ink2);border:1px solid var(--edge);
+  color:var(--text);padding:9px 11px;border-radius:3px;font-family:var(--body);font-size:14px
+}
+input[type=search]::placeholder{color:#5F7B7A}
+select{
+  background:var(--ink2);border:1px solid var(--edge);color:var(--text);
+  padding:9px 9px;border-radius:3px;font-family:var(--mono);font-size:11.5px
+}
+.btn{
+  background:transparent;border:1px solid var(--edge);color:var(--dim);
+  padding:9px 12px;border-radius:3px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;cursor:pointer
+}
+.btn:hover{border-color:var(--sea);color:var(--sea)}
+.btn.on{border-color:var(--amber);color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+/* ---------- section headers ---------- */
+.modebar.live{border-left-color:var(--amber);background:#1E1A11}
+.modebar.live.quiet{border-left-color:var(--sea);background:var(--ink2)}
+.modebar.live.quiet .codehead b{color:var(--sea);font-size:13px}
+.modebar .codehead{display:flex;flex-direction:column;margin-bottom:7px}
+.modebar .codehead b{color:var(--amber);font-family:var(--disp);font-size:15px}
+.modebar .codehead span{font-size:11.5px;color:var(--dim)}
+.copied{font-size:11.5px;color:var(--sea)}
+.modebar textarea{margin-bottom:8px;width:100%;background:var(--ink);border:1px solid var(--edge);color:var(--text);font-family:var(--mono);font-size:13px;padding:8px;border-radius:3px;resize:vertical}
+.modebar{font-size:12.5px;line-height:1.5;color:var(--dim);border:1px solid var(--edge);border-left:3px solid var(--sea);background:var(--ink2);padding:10px 13px;border-radius:0 3px 3px 0;margin:0 0 6px}
+.modebar b{color:var(--text);font-weight:600}
+.modebar.memory{border-left-color:var(--rust);background:#241612}
+.modebar.memory b{color:#EDBBA9}
+.panel{border:1px solid var(--amber);border-radius:4px;background:#1E1A11;padding:14px;margin:0 0 14px}
+.panel h4{font-family:var(--disp);font-weight:600;font-size:16px;margin:0 0 8px;color:var(--amber)}
+.panel p{font-size:13px;color:#C3D4D0;margin:0 0 10px;line-height:1.5}
+.panel textarea{width:100%;background:var(--ink);border:1px solid var(--edge);color:var(--text);font-family:var(--mono);font-size:13px;padding:9px;border-radius:3px;margin:0 0 10px;resize:vertical}
+.sec{display:flex;align-items:baseline;gap:12px;margin:34px 0 14px}
+.sec h2{font-family:var(--disp);font-weight:600;font-size:19px;letter-spacing:-.01em;margin:0;font-stretch:condensed}
+.sec i{flex:1;height:1px;background:var(--edge);font-style:normal}
+.sec span{font-family:var(--mono);font-size:10.5px;color:var(--dim)}
+
+/* ---------- cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{
+  position:relative;background:var(--card);border:1px solid var(--edge);
+  border-radius:4px;padding:15px 15px 13px;overflow:hidden
+}
+.card.done{background:#12232A;border-color:#2C4E4A}
+.num{font-family:var(--mono);font-size:10px;color:#4E6E6E;letter-spacing:.1em}
+.card h3{
+  font-family:var(--disp);font-weight:600;font-size:17.5px;line-height:1.18;
+  margin:3px 0 0;letter-spacing:-.01em;padding-right:52px
+}
+.card h3 span{color:var(--dim);font-weight:400;font-size:13px}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0 8px}
+.chip{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 6px;border-radius:2px;background:#1D373D;color:var(--sea);border:1px solid #27474C
+}
+.chip.age{color:var(--amber);border-color:#42381F;background:#231D12}
+.chip.short{color:#C9A0E0;border-color:#3B2C47;background:#231A2B}
+.chip.theme{color:#A8C0BC;border-color:#27474C;text-transform:none;letter-spacing:.02em;font-family:var(--body);font-size:11px}
+.blurb{margin:0 0 10px;font-size:13.5px;color:#C3D4D0;line-height:1.45}
+.flag{
+  display:block;font-size:12px;line-height:1.4;color:#EDBBA9;background:#2C1A16;
+  border-left:2px solid var(--rust);padding:7px 9px;margin:0 0 10px;border-radius:0 2px 2px 0
+}
+.flag b{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--rust);display:block;margin-bottom:2px}
+.where{font-size:12.5px;color:var(--dim);margin:0 0 11px}
+.where b{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:#5F7B7A;display:block;margin-bottom:2px}
+.where a{color:var(--sea);text-decoration:none;border-bottom:1px dotted #3C6660}
+.acts{display:flex;gap:6px;align-items:center;border-top:1px solid #1E3940;padding-top:10px}
+.tog{
+  background:transparent;border:1px solid var(--edge);color:var(--dim);cursor:pointer;
+  border-radius:3px;padding:6px 9px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em
+}
+.tog:hover{border-color:var(--sea);color:var(--sea)}
+.tog.on{background:var(--sea);border-color:var(--sea);color:#07211C;font-weight:700}
+.rate{margin-left:auto;display:flex;gap:5px}
+.rate button{
+  background:transparent;border:1px solid var(--edge);border-radius:3px;
+  width:32px;height:30px;cursor:pointer;font-size:14px;line-height:1;color:var(--dim)
+}
+.rate button:hover{border-color:var(--amber)}
+.rate button.on{border-color:var(--amber);background:#2A2113}
+
+/* signature: passport stamp */
+.stamp{
+  position:absolute;top:10px;right:9px;width:46px;height:46px;border-radius:50%;
+  border:2px solid var(--stamp);color:var(--stamp);display:none;
+  align-items:center;justify-content:center;flex-direction:column;
+  transform:rotate(-13deg);opacity:.9;pointer-events:none
+}
+.card.done .stamp{display:flex;animation:thud .28s ease-out}
+.stamp b{font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.05em;line-height:1.15}
+.stamp i{font-family:var(--mono);font-size:7px;font-style:normal;letter-spacing:.04em;opacity:.85}
+@keyframes thud{from{transform:rotate(-13deg) scale(2.1);opacity:0}to{transform:rotate(-13deg) scale(1);opacity:.9}}
+@media (prefers-reduced-motion:reduce){.card.done .stamp{animation:none}}
+
+/* ---------- parents shelf ---------- */
+.shelf{margin-top:44px;border:1px solid #3A2A24;border-radius:4px;background:#1A1210}
+.shelf summary{
+  cursor:pointer;padding:15px 16px;font-family:var(--disp);font-weight:600;font-size:17px;
+  list-style:none;color:#E0B7A6;font-stretch:condensed
+}
+.shelf summary::-webkit-details-marker{display:none}
+.shelf summary::after{content:" ▾";color:var(--rust)}
+.shelf[open] summary::after{content:" ▴"}
+.shelf .inner{padding:0 16px 16px}
+.shelf p.note{color:#B69384;font-size:13px;margin:0 0 14px;max-width:62ch}
+.cut{border-top:1px solid #33231E;padding:9px 0;font-size:13px}
+.cut b{font-family:var(--disp);font-weight:600;font-size:14.5px;color:#E8D3C8;font-stretch:condensed}
+.cut span{color:#9C7E71;display:block;font-size:12.5px;margin-top:1px}
+
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--edge);color:#5F7B7A;font-size:12px;font-family:var(--mono);line-height:1.6}
+.empty{padding:40px 0;color:var(--dim);text-align:center;font-family:var(--mono);font-size:12px}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Field log · assembled Aug 2026</p>
+  <h1>The Family<br>Documentary <em>Logbook</em></h1>
+  <p class="lede">Built by walking the documentary canon first — Sight &amp; Sound's critics' poll, the Rotten Tomatoes 100, IndieWire and IDA's best-of-the-century lists, Ken Burns and the BBC/Attenborough shelf, Oscar winners, ESPN and Nat Geo — and then cutting for age. Nothing here was picked because it was labelled "for kids." Stamp them as you go.</p>
+  <div class="tally">
+    <div><b id="tWatched">0</b><span>Watched</span></div>
+    <div><b id="tTotal">0</b><span>On the list</span></div>
+    <div><b id="tLoved">0</b><span>Loved</span></div>
+    <div><b id="tPct">0%</b><span>Complete</span></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="row">
+    <input type="search" id="q" placeholder="Search titles, themes, subjects…" aria-label="Search">
+    <select id="fCat" aria-label="Filter by category"><option value="">All categories</option></select>
+    <select id="fAge" aria-label="Filter by age"><option value="">Any age</option></select>
+    <button class="btn" id="fUnseen">Not yet watched</button>
+    <button class="btn" id="fFlag">Heads-up only</button>
+    <button class="btn" id="fShort">Shorts</button>
+    <button class="btn" id="pick">Pick one for tonight</button>
+    <button class="btn on" id="exp">Save progress</button>
+    <button class="btn" id="imp">Load progress</button>
+  </div>
+</div>
+
+<div class="modebar" id="mode">Checking where your marks are being saved…</div>
+
+<div id="out"></div>
+
+<details class="shelf">
+  <summary>Cut from the canon — and why</summary>
+  <div class="inner">
+    <p class="note">These all rank near the top of the same lists the main list was built from. They're here so you know they were considered rather than missed — and so you have a grown-up shelf for later. A few are worth showing a 12-year-old with you in the room; most aren't.</p>
+    <div id="cuts"></div>
+  </div>
+</details>
+
+<footer>
+  Streaming homes shift constantly — every title links to a live availability check.<br>
+  Ages are a starting point, not a verdict. You know your kids.
+</footer>
+</div>
+
+<script>
+/* ============================================================
+   THE LIST
+   t=title y=year c=category th=theme d=one-liner
+   a=age floor w=where f=heads-up (empty string = clean)
+   ============================================================ */
+const D=[
+
+/* ---------- NATURE & WILDLIFE ---------- */
+{t:"Planet Earth II",y:2016,c:"Nature",th:"Habitats, up close",d:"The series that reset the bar for what wildlife footage could look like, shot from the animal's eye level instead of the helicopter's.",a:"5+",w:"Prime Video, BBC Earth on YouTube",f:"The baby iguana vs. racer snakes chase in 'Islands' is genuinely heart-pounding — great TV, but preview it if you have a sensitive five-year-old."},
+{t:"Planet Earth",y:2006,c:"Nature",th:"The whole planet",d:"The original eleven-part sweep of the Earth's major habitats, still the cleanest introduction to the whole genre.",a:"5+",w:"Prime Video, BBC Earth on YouTube",f:"Standard predator-and-prey hunts throughout; the wolf-and-caribou sequence is the usual first tough one."},
+{t:"Planet Earth III",y:2023,c:"Nature",th:"A changed world",d:"The third round, with more attention to how animals are adapting to us.",a:"6+",w:"Prime Video, BBC Earth",f:""},
+{t:"Blue Planet II",y:2017,c:"Ocean",th:"Oceans, deeper",d:"Tool-using fish, hunting dolphins, and the deep-sea sequences that made the whole world care about plastic.",a:"5+",w:"Prime Video, BBC Earth on YouTube",f:"The pilot whale carrying her dead calf in the final episode is quietly devastating — a good conversation, but a conversation."},
+{t:"The Blue Planet",y:2001,c:"Ocean",th:"The first ocean epic",d:"The landmark that proved an entire series could live underwater.",a:"5+",w:"Prime Video, BBC Earth",f:""},
+{t:"Frozen Planet",y:2011,c:"Nature",th:"Poles, top to bottom",d:"A year at both ends of the Earth, with the killer-whale wave-washing footage that people still talk about.",a:"6+",w:"Prime Video, BBC Earth",f:"Seal hunts and a wolf pack taking a bison — the polar chapters are among the more graphic Attenborough series."},
+{t:"Frozen Planet II",y:2022,c:"Nature",th:"Ice, running out",d:"Same territory, sharper cameras, and a much louder conservation thread.",a:"6+",w:"Prime Video, BBC Earth",f:""},
+{t:"Life",y:2009,c:"Nature",th:"Survival strategies",d:"Ten episodes organised by how creatures actually solve the problem of staying alive.",a:"6+",w:"Prime Video, Discovery+",f:""},
+{t:"Life on Earth",y:1979,c:"Nature",th:"The original",d:"Attenborough's thirteen-part evolutionary history — the show every nature documentary since is descended from.",a:"8+",w:"BBC iPlayer, Prime Video, archive copies on YouTube",f:"Pacing is 1979-slow; older kids get the reward, younger ones usually don't."},
+{t:"The Living Planet",y:1984,c:"Nature",th:"Ecology, explained",d:"The follow-up to Life on Earth, walking through Earth's ecosystems one climate zone at a time.",a:"9+",w:"Prime Video, BBC archive",f:""},
+{t:"Our Planet",y:2019,c:"Nature",th:"Beauty with a bill attached",d:"Netflix's answer to Planet Earth — as gorgeous as the BBC, but it never lets you forget what it's costing.",a:"7+",w:"Netflix",f:"The walruses falling from the cliff in 'Frozen Worlds' is the single most upsetting scene in modern nature TV. Skip that segment or watch it with them."},
+{t:"Our Planet II",y:2023,c:"Nature",th:"Migration",d:"Four episodes built entirely around animals on the move.",a:"6+",w:"Netflix",f:""},
+{t:"Green Planet",y:2022,c:"Nature",th:"Plants are predators",d:"Time-lapse rigs turn plants into characters with strategy, aggression and ambition. Unusually good for younger kids because nothing gets eaten by a lion.",a:"4+",w:"Prime Video, PBS",f:""},
+{t:"Secret Garden",y:2026,c:"Nature",th:"Backyard wildlife",d:"Attenborough's newest — five episodes on the enormous amount of life happening in ordinary British gardens.",a:"4+",w:"BBC iPlayer; US streaming rollout in progress",f:""},
+{t:"Wild Isles",y:2023,c:"Nature",th:"Close to home",d:"Proof that world-class wildlife filmmaking doesn't require a plane ticket.",a:"5+",w:"Prime Video, BBC Earth",f:""},
+{t:"Prehistoric Planet",y:2022,c:"Nature",th:"Dinosaurs, documented",d:"Dinosaurs filmed exactly as if a BBC crew had been there, narrated by Attenborough. Almost unfairly effective on kids.",a:"5+",w:"Apple TV+",f:"Predation is depicted, but stylised — noticeably gentler than real wildlife footage."},
+{t:"A Real Bug's Life",y:2024,c:"Nature",th:"Tiny worlds",d:"Awasi Nat Geo series that shrinks you down into a backyard, a rainforest, a New York alley. Short episodes, big laughs.",a:"4+",w:"Disney+, Hulu",f:""},
+{t:"Tiny World",y:2020,c:"Nature",th:"Small heroes",d:"Paul Rudd narrating the survival stories of the very small, from the team behind Planet Earth II.",a:"4+",w:"Apple TV+",f:""},
+{t:"Micro Monsters",y:2013,c:"Nature",th:"Insects in 3D",d:"Attenborough taking macro photography to its logical extreme.",a:"6+",w:"Prime Video, Curiosity",f:""},
+{t:"Spy in the Wild",y:2017,c:"Nature",th:"Robot animals",d:"Animatronic spy-creatures embedded in real animal groups. Kids find the premise irresistible and the science is real.",a:"4+",w:"PBS, Prime Video",f:""},
+{t:"Seven Worlds, One Planet",y:2019,c:"Nature",th:"Continent by continent",d:"One episode per continent, with some of the best cinematography in the whole BBC catalogue.",a:"6+",w:"Prime Video, BBC Earth",f:""},
+{t:"A Perfect Planet",y:2021,c:"Nature",th:"Forces that shape life",d:"Volcanoes, sunlight, weather and oceans as the engines behind everything alive.",a:"7+",w:"Prime Video, Discovery+",f:""},
+{t:"Dynasties",y:2018,c:"Nature",th:"Animal families",d:"Five species, five multi-year family sagas, told like drama rather than survey.",a:"8+",w:"Prime Video, BBC Earth",f:"Deliberately emotional — infanticide, exile and death of named animals you've followed for an hour."},
+{t:"Africa",y:2013,c:"Nature",th:"One continent",d:"Among the most beautiful things the BBC Natural History Unit has ever made.",a:"7+",w:"Prime Video, BBC Earth",f:"The baby elephant dying in the drought episode is one of the hardest scenes in any Attenborough series."},
+{t:"Mammals",y:2024,c:"Nature",th:"Us and our relatives",d:"Attenborough's recent survey of what mammals are doing to survive a human-shaped world.",a:"6+",w:"Prime Video, BBC Earth",f:""},
+{t:"Asia",y:2024,c:"Nature",th:"The widest continent",d:"Desert to rainforest to the Himalaya, in the newest of the BBC's continental series.",a:"6+",w:"Prime Video, BBC Earth",f:""},
+{t:"The Americas",y:2025,c:"Nature",th:"Pole to Patagonia",d:"Ten episodes narrated by Tom Hanks, running the length of two continents.",a:"5+",w:"Peacock, NBC",f:""},
+{t:"Our Great National Parks",y:2022,c:"Nature",th:"Protected places",d:"Barack Obama narrating a genuinely joyful tour of parks on five continents. Warm, funny, unusually easy for a family.",a:"5+",w:"Netflix",f:""},
+{t:"Night on Earth",y:2020,c:"Nature",th:"After dark",d:"New low-light camera tech reveals what the world does when the sun goes down.",a:"6+",w:"Netflix",f:""},
+{t:"Life in Colour",y:2021,c:"Nature",th:"How animals see",d:"Attenborough on colour as a tool — camouflage, warning, courtship.",a:"5+",w:"Netflix",f:""},
+{t:"Penguin Town",y:2021,c:"Nature",th:"Neighbourhood penguins",d:"A colony of African penguins living in a South African beach town, told with a sitcom's sense of humour.",a:"4+",w:"Netflix",f:""},
+{t:"Kangaroo Valley",y:2022,c:"Nature",th:"Growing up",d:"A short, gentle portrait of one joey's first year. Good starter documentary for a three-year-old.",a:"3+",w:"Netflix",f:""},
+{t:"Secret Lives of Orangutans",y:2024,c:"Nature",th:"Ape family",d:"Three generations of one orangutan family in Sumatra, narrated by Attenborough.",a:"5+",w:"Netflix",f:""},
+{t:"Puff: Wonders of the Reef",y:2021,c:"Ocean",th:"A pufferfish's first year",d:"A microscopic-scale reef story told through one tiny fish. Visually unlike anything else.",a:"4+",w:"Netflix",f:""},
+{t:"Pangolin: Kulu's Journey",y:2025,c:"Nature",th:"Rescue and release",d:"From the My Octopus Teacher team — a rescued pangolin learning to be wild again.",a:"6+",w:"Netflix",f:"Poaching is discussed and the animal's condition at rescue is upsetting."},
+{t:"My Octopus Teacher",y:2020,c:"Ocean",th:"An unlikely friendship",d:"Oscar winner. A burnt-out filmmaker free-dives daily in a kelp forest and befriends an octopus.",a:"7+",w:"Netflix",f:"A shark takes the octopus's arm on camera, and she dies at the end. Both are handled tenderly, but both land hard."},
+{t:"Ocean with David Attenborough",y:2025,c:"Ocean",th:"What we've done, what we can fix",d:"At 99, Attenborough's most direct film — and an unusually hopeful one about how fast the sea recovers when left alone.",a:"8+",w:"Disney+, Hulu, Nat Geo",f:"The bottom-trawling footage is deliberately shocking and works as intended."},
+{t:"David Attenborough: A Life on Our Planet",y:2020,c:"Nature",th:"A witness statement",d:"His own career as the timeline for what's been lost — and what he thinks can still be done.",a:"9+",w:"Netflix",f:"Sobering by design; the middle section is bleak before it turns."},
+{t:"Fantastic Fungi",y:2019,c:"Nature",th:"Underground networks",d:"Time-lapse mushrooms and the mycelial internet beneath the forest floor. Visually hypnotic.",a:"6+",w:"Netflix, Prime Video",f:"One section covers psilocybin research and therapeutic use — brief, clinical, but worth knowing about."},
+{t:"Microcosmos",y:1996,c:"Nature",th:"A day in the grass",d:"An hour in a French meadow at insect scale, almost no narration. Still one of the most beautiful nature films ever made.",a:"4+",w:"Prime Video, Kanopy, Criterion Channel",f:""},
+{t:"Winged Migration",y:2001,c:"Nature",th:"Flight",d:"Oscar-nominated, and on the Rotten Tomatoes nature 100. Cameras flying alongside migrating birds for four years.",a:"4+",w:"Prime Video, Kanopy",f:"A few brief hunting and pollution scenes; a bird is shot and one is trapped in an oil slick."},
+{t:"March of the Penguins",y:2005,c:"Nature",th:"An impossible commute",d:"The Oscar winner that kicked off the modern nature-doc boom. Morgan Freeman, emperor penguins, a brutal Antarctic winter.",a:"5+",w:"Disney+, Hulu",f:"Chicks freeze and a predator takes an adult; the film is honest that many don't survive."},
+{t:"Kedi",y:2016,c:"Nature",th:"Street cats of Istanbul",d:"Seven cats and the city that half-adopts them. On the RT nature 100 and one of the warmest documentaries ever made.",a:"5+",w:"Prime Video, Kanopy",f:""},
+{t:"The Wild Parrots of Telegraph Hill",y:2003,c:"Nature",th:"A man and his flock",d:"A San Francisco street musician becomes caretaker of a wild parrot flock. Small, funny, quietly moving.",a:"7+",w:"Prime Video, Tubi",f:"One parrot dies and the man's own precarious housing is part of the story."},
+{t:"All That Breathes",y:2022,c:"Nature",th:"Bird hospital in Delhi",d:"Two brothers rescuing black kites out of Delhi's poisoned sky. Won Sundance and Cannes documentary prizes.",a:"11+",w:"HBO Max",f:"Injured birds are shown in detail, and communal violence in Delhi sits in the background throughout. Slow, beautiful, for an older kid."},
+{t:"Honeyland",y:2019,c:"Nature",th:"Take half, leave half",d:"A Macedonian beekeeper living by an old rule, and the neighbours who break it. Nominated for both Documentary and International Feature.",a:"11+",w:"Hulu, Prime Video",f:"Her mother's decline and death are part of the film; slow-paced and subtitled."},
+{t:"The Elephant Queen",y:2019,c:"Nature",th:"Matriarch",d:"An elephant matriarch leads her herd through a killing drought.",a:"8+",w:"Apple TV+",f:"A calf dies. It's handled with real care but it is the emotional centre of the film."},
+{t:"Gunda",y:2020,c:"Nature",th:"A pig, in full",d:"Black-and-white, wordless, no music — just a sow and her piglets. Executive-produced by Joaquin Phoenix.",a:"7+",w:"Hulu, Prime Video",f:"The ending, in which her piglets are taken, is wordless and quietly wrenching. That's the point of the film."},
+{t:"The Truffle Hunters",y:2020,c:"Nature",th:"Old men and their dogs",d:"Elderly Piedmontese truffle hunters and the dogs they love more than the truffles.",a:"6+",w:"Hulu, Prime Video",f:"Subtitled; a poisoning threat to the dogs is discussed."},
+{t:"Cane Toads: An Unnatural History",y:1988,c:"Nature",th:"An invasion, deadpan",d:"A cult-classic Australian film about a catastrophic ecological mistake, played almost entirely for laughs.",a:"8+",w:"YouTube, Kanopy",f:"Toads are squashed by cars in a comic register; dry humour that lands better with older kids."},
+{t:"Wings of Life",y:2011,c:"Nature",th:"Pollinators",d:"Disneynature's slow-motion study of bees, bats, butterflies and hummingbirds, narrated by Meryl Streep.",a:"5+",w:"Disney+",f:""},
+{t:"Fire of Love",y:2022,c:"Nature",th:"Volcanoes, and love",d:"Two French volcanologists who filmed eruptions together for twenty years. On the RT nature 100 and Oscar-nominated.",a:"8+",w:"Disney+, Hulu",f:"Katia and Maurice are killed by an eruption — stated at the start, never shown."},
+{t:"Chasing Coral",y:2017,c:"Ocean",th:"Reefs, bleaching",d:"A three-year time-lapse of coral dying, and the divers who set up the cameras.",a:"8+",w:"Netflix",f:""},
+{t:"Chasing Ice",y:2012,c:"Nature",th:"Glaciers, retreating",d:"Time-lapse cameras on glaciers, including the largest calving event ever filmed.",a:"8+",w:"Prime Video, Tubi",f:""},
+{t:"The Year Earth Changed",y:2021,c:"Nature",th:"When we stopped",d:"What wildlife did during the 2020 lockdowns. Short, hopeful, easy.",a:"5+",w:"Apple TV+",f:""},
+{t:"Inside the Mind of a Dog",y:2024,c:"Nature",th:"How dogs think",d:"Actual cognition research on why dogs read us so well.",a:"6+",w:"Netflix",f:""},
+{t:"Dogs",y:2018,c:"Nature",th:"People and their dogs",d:"Six standalone episodes from six countries about the dog-human bond.",a:"7+",w:"Netflix",f:"The Syrian refugee episode involves war and separation."},
+{t:"Serengeti",y:2019,c:"Nature",th:"Soap opera on the plains",d:"Wildlife filmed and edited as continuing drama, with recurring animal characters.",a:"7+",w:"Discovery+, Prime Video",f:"Kills are frequent and the storytelling makes them feel personal."},
+
+/* ---------- DISNEYNATURE ---------- */
+{t:"Bears",y:2014,c:"Nature",th:"A mother's first year",d:"A grizzly mother and two cubs through one Alaskan year, narrated by John C. Reilly. On the RT nature 100 and rated G.",a:"4+",w:"Disney+",f:""},
+{t:"Penguins",y:2019,c:"Nature",th:"A first-time dad",d:"Steve the Adélie penguin, comically out of his depth. The funniest thing Disneynature has made.",a:"3+",w:"Disney+",f:""},
+{t:"Chimpanzee",y:2012,c:"Nature",th:"An orphan adopted",d:"A young chimp orphaned and then adopted by the group's alpha male. True, and remarkable.",a:"5+",w:"Disney+",f:"His mother is killed by a rival group off-camera."},
+{t:"Oceans",y:2010,c:"Ocean",th:"The blue majority",d:"The big theatrical ocean film, narrated by Pierce Brosnan.",a:"5+",w:"Disney+",f:""},
+{t:"Earth",y:2007,c:"Nature",th:"Three journeys",d:"Polar bears, elephants and humpbacks across one year — the Planet Earth footage, cut into a single film.",a:"5+",w:"Disney+",f:"A starving polar bear's failed hunt and death is the emotional pivot."},
+{t:"Born in China",y:2016,c:"Nature",th:"Three families",d:"A panda, a snow leopard and a golden monkey, narrated by John Krasinski.",a:"6+",w:"Disney+",f:"The snow leopard storyline ends in her death — the sharpest turn in any Disneynature film."},
+{t:"African Cats",y:2011,c:"Nature",th:"Lions and cheetahs",d:"Samuel L. Jackson narrating two big-cat families on the Mara.",a:"6+",w:"Disney+",f:"Hunts, and the death of an aging lioness."},
+{t:"Monkey Kingdom",y:2015,c:"Nature",th:"Social ladders",d:"A low-ranking macaque mother working the politics of her troop in Sri Lanka.",a:"5+",w:"Disney+",f:""},
+{t:"Dolphin Reef",y:2020,c:"Ocean",th:"Growing up at sea",d:"A young dolphin learning the reef, narrated by Natalie Portman.",a:"4+",w:"Disney+",f:""},
+{t:"Elephant",y:2020,c:"Nature",th:"The long walk",d:"A herd's thousand-mile migration across the Kalahari.",a:"5+",w:"Disney+",f:""},
+{t:"Polar Bear",y:2022,c:"Nature",th:"A changing home",d:"A mother bear's life told against a shrinking ice season.",a:"6+",w:"Disney+",f:""},
+{t:"Tiger",y:2024,c:"Nature",th:"Raising cubs",d:"Priyanka Chopra Jonas narrating a tigress raising four cubs in India.",a:"6+",w:"Disney+",f:""},
+{t:"Sea Lions of the Galápagos",y:2025,c:"Ocean",th:"Island childhood",d:"Brendan Fraser narrating a sea lion pup's first year.",a:"4+",w:"Disney+",f:""},
+{t:"Orangutan",y:2026,c:"Nature",th:"Leaving home",d:"The newest Disneynature — Indah, an adolescent orangutan learning to live alone in the canopy. Narrated by Josh Gad.",a:"4+",w:"Disney+",f:""},
+{t:"The Crimson Wing",y:2008,c:"Nature",th:"Flamingos",d:"A million flamingos on a Tanzanian soda lake, shot like a painting.",a:"6+",w:"Disney+",f:"Chicks are trapped by salt deposits and taken by predators; more attrition on screen than most Disneynature films."},
+{t:"Secrets of the Bees",y:2026,c:"Nature",th:"Hive intelligence",d:"Nat Geo's new two-parter using novel camera tech to film inside hives, with James Cameron producing.",a:"6+",w:"Disney+, Hulu",f:""},
+
+/* ---------- OCEAN & EXPLORATION ---------- */
+{t:"The Silent World",y:1956,c:"Ocean",th:"The first dive film",d:"Cousteau's Palme d'Or winner — the film that invented underwater documentary.",a:"9+",w:"Prime Video, Criterion Channel",f:"Genuinely rough by modern standards: the crew dynamites a reef to count fish and kills sharks on camera. Worth watching *with* an older kid as a lesson in how ethics changed."},
+{t:"Deep Blue",y:2003,c:"Ocean",th:"The Blue Planet, theatrical",d:"The BBC's ocean footage recut as a feature with a full orchestral score.",a:"6+",w:"Prime Video",f:"Includes the orca-hunting-grey-whale-calf sequence, uncut."},
+{t:"The Rescue",y:2021,c:"Adventure",th:"Thai cave rescue",d:"From the Free Solo directors — the amateur cave divers who pulled twelve boys out of a flooded Thai cave.",a:"9+",w:"Disney+, Hulu",f:"Genuine life-and-death tension, and one rescuer dies. Older kids find it gripping rather than frightening."},
+{t:"Free Solo",y:2018,c:"Adventure",th:"El Capitan, no rope",d:"Oscar winner. Alex Honnold climbing 3,000 feet of granite with nothing on him.",a:"8+",w:"Disney+, Hulu, Nat Geo",f:"Vertiginous, and other climbers' deaths are discussed. A couple of swear words."},
+{t:"The Dawn Wall",y:2017,c:"Adventure",th:"Six years on one route",d:"Two climbers spending nineteen days on the hardest big-wall climb in the world — and the friendship that decides how it ends.",a:"8+",w:"Netflix, Prime Video",f:"A kidnapping in Kyrgyzstan is recounted in the first act."},
+{t:"Touching the Void",y:2003,c:"Adventure",th:"Cutting the rope",d:"On the RT nature 100 and most best-doc lists. A climber breaks his leg high in the Andes and his partner has to decide whether to cut him loose.",a:"11+",w:"Prime Video, Kanopy",f:"Extremely intense survival footage and re-enactment; injury described in detail."},
+{t:"Maiden",y:2018,c:"Sport",th:"First all-woman crew",d:"Tracy Edwards and the first all-female crew to race the Whitbread Round the World. Genuinely thrilling.",a:"9+",w:"Prime Video, Hulu",f:"A sailor from another boat is lost at sea; some swearing."},
+{t:"14 Peaks: Nothing Is Impossible",y:2021,c:"Adventure",th:"Eight thousanders",d:"Nirmal Purja climbing all fourteen 8,000-metre peaks in seven months.",a:"10+",w:"Netflix",f:"Bodies on the mountain, and frank talk about death rates. Some language."},
+{t:"Antarctica: A Year on Ice",y:2013,c:"Adventure",th:"Wintering over",d:"What it's actually like to live at McMurdo through a polar winter — time-lapse auroras and all.",a:"7+",w:"Prime Video, Tubi",f:""},
+{t:"Encounters at the End of the World",y:2007,c:"Adventure",th:"Antarctica's oddballs",d:"Herzog going to Antarctica and mostly interviewing the strange people who chose to live there.",a:"10+",w:"Prime Video, Kanopy",f:"Herzog's usual bleak asides, including a memorably sad disoriented penguin."},
+{t:"Sherpa",y:2015,c:"Adventure",th:"Who carries the load",d:"Everest from the Sherpa side, filmed during the 2014 avalanche season.",a:"11+",w:"Prime Video, Tubi",f:"Sixteen Sherpas are killed in an avalanche during filming; grieving families are shown."},
+{t:"Man on Wire",y:2008,c:"Adventure",th:"A wire between towers",d:"Number one on the Rotten Tomatoes 100 Best Documentaries. Philippe Petit's illegal 1974 tightrope walk between the Twin Towers, told like a heist.",a:"8+",w:"Prime Video, Kanopy",f:"A brief non-sexual nude shot and an affair subplot; the towers' later fate is never mentioned but older kids will think of it."},
+
+/* ---------- SPACE & SCIENCE ---------- */
+{t:"Apollo 11",y:2019,c:"Space & Science",th:"The mission, unnarrated",d:"Newly found 70mm footage cut into the mission itself, with no narrator and no talking heads. Astonishing on a big screen.",a:"6+",w:"Prime Video, Hulu, Kanopy",f:""},
+{t:"For All Mankind",y:1989,c:"Space & Science",th:"All nine Apollo flights",d:"Apollo footage assembled into one seamless lunar journey, scored by Brian Eno. A Sight & Sound canon pick.",a:"7+",w:"Criterion Channel, Prime Video",f:""},
+{t:"Good Night Oppy",y:2022,c:"Space & Science",th:"A rover that outlived its mission",d:"The Mars rover Opportunity, built for ninety days and running for fifteen years. Unashamedly emotional and excellent for kids.",a:"6+",w:"Prime Video",f:"You will cry when the rover dies. So will they. It's a good cry."},
+{t:"The Farthest: Voyager in Space",y:2017,c:"Space & Science",th:"The Golden Record",d:"The two Voyager probes and the people who built them, still transmitting from interstellar space.",a:"8+",w:"PBS, Prime Video",f:""},
+{t:"Cosmos: A Spacetime Odyssey",y:2014,c:"Space & Science",th:"Everything, explained",d:"Neil deGrasse Tyson's thirteen-part revival — still the most complete science series made for a general audience.",a:"8+",w:"Disney+, Hulu",f:"Touches on extinction, nuclear war and the far future; a few kids find the scale-of-the-universe material genuinely unsettling."},
+{t:"Cosmos: A Personal Voyage",y:1980,c:"Space & Science",th:"The original",d:"Carl Sagan's own. Slower, stranger and in some ways still unmatched.",a:"10+",w:"Prime Video, Tubi",f:""},
+{t:"One Strange Rock",y:2018,c:"Space & Science",th:"Earth from orbit",d:"Astronauts explaining how improbable Earth is, produced by Darren Aronofsky.",a:"8+",w:"Disney+, Hulu",f:""},
+{t:"Our Universe",y:2022,c:"Space & Science",th:"13.8 billion years",d:"Morgan Freeman connecting the Big Bang to individual animals alive today. Big CGI, family-pitched.",a:"6+",w:"Netflix",f:""},
+{t:"The Planets",y:2019,c:"Space & Science",th:"Solar system biographies",d:"Brian Cox treating each planet as a character with a history.",a:"8+",w:"PBS, Prime Video",f:""},
+{t:"Deep Sky",y:2023,c:"Space & Science",th:"Webb telescope",d:"IMAX film on the James Webb Space Telescope and its first images.",a:"6+",w:"Prime Video, IMAX venues",f:""},
+{t:"Black Holes: The Edge of All We Know",y:2020,c:"Space & Science",th:"Photographing the impossible",d:"Two hundred scientists taking the first-ever picture of a black hole, and the moment they see it.",a:"10+",w:"Netflix, Prime Video",f:""},
+{t:"The Mars Generation",y:2017,c:"Space & Science",th:"Space Camp kids",d:"Teenagers at Space Camp, intercut with NASA's history and future. Very motivating for a space-obsessed nine-year-old.",a:"8+",w:"Netflix",f:""},
+{t:"Mercury 13",y:2018,c:"Space & Science",th:"The women who passed",d:"Thirteen women pilots who passed every NASA test in the 1960s and were never allowed to fly.",a:"9+",w:"Netflix",f:""},
+{t:"Walking with Dinosaurs",y:1999,c:"Space & Science",th:"Dinosaurs, first attempt",d:"The BBC series that invented the format Prehistoric Planet later perfected. Still holds up for kids.",a:"5+",w:"Prime Video, BBC",f:"Predation is more graphic than the modern remakes."},
+{t:"Dinosaur 13",y:2014,c:"Space & Science",th:"Who owns a fossil",d:"The discovery of Sue, the largest T. rex ever found, and the ten-year legal fight over her.",a:"9+",w:"Prime Video, Tubi",f:"The legal battle involves an FBI raid and a prison sentence."},
+{t:"Surviving Earth",y:2026,c:"Space & Science",th:"Mass extinctions",d:"New eight-part NBC series from the Walking with Dinosaurs creator, on the five great extinctions.",a:"8+",w:"Peacock, NBC",f:"The subject is planetary catastrophe; CGI deaths throughout."},
+{t:"Between the Folds",y:2008,c:"Space & Science",th:"Origami as maths",d:"Physicists and artists who fold paper for a living. Quietly one of the best films about how curiosity works.",a:"7+",w:"PBS, Kanopy",f:""},
+{t:"Particle Fever",y:2013,c:"Space & Science",th:"Finding the Higgs",d:"Physicists at the Large Hadron Collider waiting to find out if their life's work was right.",a:"11+",w:"Prime Video, Kanopy",f:""},
+{t:"An Inconvenient Truth",y:2006,c:"Space & Science",th:"The slideshow",d:"The film that put climate change into the mainstream. Dated in places, still the clearest primer.",a:"9+",w:"Prime Video, Paramount+",f:"Anxiety-provoking for some kids; pair it with 2040."},
+{t:"2040",y:2019,c:"Space & Science",th:"A solvable future",d:"A director makes a film for his four-year-old daughter about what the world could look like if we fix things. Built for exactly this age range.",a:"7+",w:"Prime Video, Tubi",f:""},
+{t:"Kiss the Ground",y:2020,c:"Space & Science",th:"Soil",d:"Regenerative farming as a climate solution. Hopeful rather than alarming.",a:"9+",w:"Netflix",f:""},
+{sh:1,t:"Deep Look",y:2014,c:"Space & Science",th:"Ultra-macro shorts",d:"PBS/KQED's four-minute 4K films on single creatures. Free, endless, and perfect for the ten minutes before bed.",a:"4+",w:"YouTube (free), PBS",f:""},
+
+/* ---------- SPORT ---------- */
+{t:"The Short Game",y:2013,c:"Sport",th:"Eight-year-old golfers",d:"Seven kids competing at the world championship of under-eight golf. Funny, sharp, and about kids their own age.",a:"6+",w:"Netflix, Prime Video",f:"Some pushy-parent behaviour worth talking about afterwards."},
+{t:"Spellbound",y:2002,c:"Sport",th:"National Spelling Bee",d:"Oscar-nominated. Eight kids and the most tense competition ever filmed with no physical contact.",a:"6+",w:"Prime Video, Tubi",f:""},
+{t:"Mad Hot Ballroom",y:2005,c:"Sport",th:"Fifth-grade ballroom",d:"New York public-school kids learning to tango, merengue and swing for a citywide competition.",a:"6+",w:"Disney+, Prime Video",f:""},
+{t:"Brooklyn Castle",y:2012,c:"Sport",th:"Junior high chess dynasty",d:"An inner-city middle school with the best chess team in the country, and a budget being cut out from under it.",a:"8+",w:"Prime Video, Tubi",f:""},
+{t:"First Position",y:2011,c:"Sport",th:"Ballet, at eleven",d:"Six young dancers preparing for the Youth America Grand Prix.",a:"7+",w:"Prime Video, Tubi",f:"Injuries, and real discussion of what elite training costs a childhood."},
+{t:"Rising Phoenix",y:2020,c:"Sport",th:"Paralympics",d:"The history of the Paralympic movement told through nine athletes. Beautifully made and genuinely inspiring rather than sentimental.",a:"10+",w:"Netflix",f:"Injuries and illnesses are described directly — one athlete lost her limbs to meningitis at eleven."},
+{t:"The Endless Summer",y:1966,c:"Sport",th:"Chasing waves",d:"Two surfers following summer around the globe. The original surf film and still the most joyful.",a:"5+",w:"Prime Video, Tubi",f:"Some very-1966 attitudes toward the countries they visit."},
+{t:"Riding Giants",y:2004,c:"Sport",th:"Big-wave history",d:"Stacy Peralta's history of big-wave surfing, from Waimea to Mavericks.",a:"9+",w:"Prime Video, Tubi",f:"Mark Foo's death at Mavericks is covered; occasional swearing."},
+{t:"Step Into Liquid",y:2003,c:"Sport",th:"Surfing everywhere",d:"Surfing in Texas oil tankers' wakes, Irish winter storms and Rapa Nui. Unusually wholesome.",a:"7+",w:"Prime Video, Tubi",f:""},
+{t:"Bethany Hamilton: Unstoppable",y:2018,c:"Sport",th:"Back in the water",d:"The documentary — not the dramatised version. Hamilton returning to pro surfing after losing an arm, and later competing while pregnant.",a:"8+",w:"Prime Video, Tubi",f:"The shark attack is recounted with archival news footage."},
+{t:"100 Foot Wave",y:2021,c:"Sport",th:"Nazaré",d:"Garrett McNamara and the town in Portugal with the largest surfable waves on Earth.",a:"9+",w:"HBO Max",f:"Near-drownings and serious injuries; some language."},
+{t:"Bones Brigade: An Autobiography",y:2012,c:"Sport",th:"Skateboarding's team",d:"Tony Hawk, Rodney Mullen and the team that invented modern skating, told by them.",a:"9+",w:"Prime Video, Tubi",f:"Some swearing and frank talk about teenage fame."},
+{t:"When We Were Kings",y:1996,c:"Sport",th:"Rumble in the Jungle",d:"Oscar winner. Ali vs Foreman in Zaire, 1974 — as much about Ali's mind as his fists.",a:"10+",w:"Prime Video, HBO Max",f:"Boxing violence, some language, and Mobutu's dictatorship in the background."},
+{t:"Senna",y:2010,c:"Sport",th:"Formula One",d:"Ayrton Senna's career told entirely in archive footage, with no interviews on camera. One of the great sports films of any kind.",a:"10+",w:"Netflix, Prime Video",f:"Ends with the crash that killed him, shown from a distance. Real, and hard."},
+{t:"Red Army",y:2014,c:"Sport",th:"Soviet hockey",d:"The USSR's legendary hockey team and what happened to its players when the country dissolved.",a:"10+",w:"Prime Video, Hulu",f:"Cold War politics, some language."},
+{t:"Do You Believe in Miracles?",y:2001,c:"Sport",th:"1980 US hockey",d:"HBO's account of the Miracle on Ice, told by the players who were there.",a:"7+",w:"HBO Max, YouTube",f:""},
+{t:"Little Big Men",y:2010,c:"Sport",th:"Little League champions",d:"A 30 for 30 on the 1982 team from Kirkland, Washington that won the Little League World Series — and what came after.",a:"8+",w:"ESPN+",f:"The 'what came after' is bittersweet."},
+{t:"We Are the Champions",y:2020,c:"Sport",th:"Wonderfully strange contests",d:"Cheese rolling, chilli eating, fantasy hairstyling, yo-yo. Six half-hours of pure delight, narrated by Rainn Wilson.",a:"6+",w:"Netflix",f:""},
+{t:"The Barkley Marathons",y:2014,c:"Sport",th:"The race that eats its young",d:"An absurd Tennessee ultramarathon almost nobody finishes, run by a man who invents the rules as he goes.",a:"8+",w:"Prime Video, Tubi",f:"Occasional swearing from very tired people."},
+{t:"Pelé",y:2021,c:"Sport",th:"Football and a dictatorship",d:"The rise of the first global football star, and the harder questions about his silence under Brazil's junta.",a:"9+",w:"Netflix",f:"Political repression is a significant thread."},
+{t:"The Last Dance",y:2020,c:"Sport",th:"The 1998 Bulls",d:"Ten hours on Michael Jordan's final championship season. The most-watched sports documentary of the modern era.",a:"11+",w:"Netflix, ESPN+",f:"Frequent swearing, gambling, drug references, and a murder in the family background. Great, but a tween film."},
+{t:"Hoop Dreams",y:1994,c:"Sport",th:"Two kids, five years",d:"Consistently ranked the greatest sports documentary ever made — two Chicago teenagers followed from eighth grade to college.",a:"12+",w:"Criterion Channel, HBO Max",f:"Language, poverty, drug addiction in one family. Extraordinary, and a genuine tween-and-up film."},
+{t:"Undefeated",y:2011,c:"Sport",th:"A high-school season",d:"Oscar winner. A volunteer coach and a losing team in North Memphis.",a:"12+",w:"Prime Video",f:"Considerable swearing throughout."},
+
+/* ---------- PEOPLE & PORTRAITS ---------- */
+{t:"Won't You Be My Neighbor?",y:2018,c:"People",th:"Mister Rogers",d:"Fred Rogers, and the radical idea that children deserve to be spoken to honestly. Possibly the single best family documentary ever made.",a:"5+",w:"Max, Prime Video",f:"Touches on the assassination of RFK and on Rogers' own doubts."},
+{t:"Being Elmo: A Puppeteer's Journey",y:2011,c:"People",th:"Finding your thing",d:"Kevin Clash, a Black kid from Baltimore who built puppets in his bedroom and became Elmo.",a:"5+",w:"Prime Video, Tubi",f:""},
+{t:"Street Gang: How We Got to Sesame Street",y:2021,c:"People",th:"Inventing children's TV",d:"The activists, puppeteers and educators who built Sesame Street as a deliberate intervention.",a:"7+",w:"HBO Max",f:"Includes the episode explaining Mr. Hooper's death."},
+{t:"Jim Henson: Idea Man",y:2024,c:"People",th:"A restless imagination",d:"Ron Howard's portrait of Henson, using his own sketchbooks and home movies.",a:"8+",w:"Disney+",f:"His death, and the strain his work put on his marriage."},
+{t:"Jane",y:2017,c:"People",th:"Goodall at Gombe",d:"Lost 1960s footage of Jane Goodall's first years with chimpanzees, scored by Philip Glass. Gorgeous.",a:"8+",w:"Disney+, Hulu",f:"A polio outbreak among the chimps, and later chimpanzee violence."},
+{t:"Faces Places",y:2017,c:"People",th:"Portraits on walls",d:"Agnès Varda at 88 and the photographer JR driving round France pasting giant portraits of villagers on buildings. Warm and funny.",a:"8+",w:"Criterion Channel, Kanopy",f:"Subtitled."},
+{sh:1,t:"The Elephant Whisperers",y:2022,c:"People",th:"Raising an orphan",d:"Oscar-winning short. A couple in Tamil Nadu raising an orphaned elephant calf. Forty minutes, and about as gentle as documentary gets.",a:"5+",w:"Netflix",f:""},
+{t:"Life, Animated",y:2016,c:"People",th:"Finding language",d:"Oscar-nominated. A young autistic man who learned to communicate through Disney films.",a:"8+",w:"Prime Video, Kanopy",f:"Bullying and family strain are discussed frankly."},
+{t:"Science Fair",y:2018,c:"People",th:"The teenage nationals",d:"Nine students at the International Science and Engineering Fair. Funny, tense, and full of kids you'd want yours to meet.",a:"8+",w:"Disney+, Hulu, Nat Geo",f:""},
+{t:"Magnus",y:2016,c:"People",th:"A chess prodigy",d:"Magnus Carlsen from thirteen-year-old oddity to world champion.",a:"8+",w:"Prime Video, Tubi",f:""},
+{t:"The King of Kong: A Fistful of Quarters",y:2007,c:"People",th:"An arcade rivalry",d:"A middle-school teacher takes on the reigning Donkey Kong champion. A perfect underdog story that happens to be about a video game.",a:"8+",w:"Prime Video, Tubi",f:"Mild language; a couple of adults behave badly."},
+{t:"Indie Game: The Movie",y:2012,c:"People",th:"Making something alone",d:"Three small teams finishing games that might ruin them. Good for a kid who wants to build things.",a:"10+",w:"Prime Video",f:"Swearing and real depiction of burnout."},
+{t:"The Pixar Story",y:2007,c:"People",th:"How Pixar happened",d:"Twenty years of a company nobody expected to work.",a:"6+",w:"Disney+",f:""},
+{t:"Waking Sleeping Beauty",y:2009,c:"People",th:"Disney's comeback",d:"The infighting and near-collapse behind the animation renaissance of the late eighties.",a:"9+",w:"Disney+",f:"Corporate conflict, and Howard Ashman's death from AIDS."},
+{t:"The Kingdom of Dreams and Madness",y:2013,c:"People",th:"Inside Ghibli",d:"A year with Hayao Miyazaki while he makes The Wind Rises. Quiet, funny, and a masterclass in stubbornness.",a:"9+",w:"Prime Video, Kanopy",f:"Subtitled; Miyazaki chain-smokes constantly and is bracingly pessimistic."},
+{t:"Rivers and Tides",y:2001,c:"People",th:"Art that washes away",d:"Andy Goldsworthy building sculptures out of ice, stone and leaves and then letting the tide take them.",a:"6+",w:"Prime Video, Kanopy",f:"Meditative and slow; it wins over some kids completely and loses others."},
+{t:"Jiro Dreams of Sushi",y:2011,c:"Food & Making",th:"Mastery",d:"An eighty-five-year-old sushi chef who has been trying to get better for seventy years.",a:"8+",w:"Prime Video, Tubi",f:"Subtitled; the father-son relationship is cool and complicated."},
+{t:"The Biggest Little Farm",y:2018,c:"Food & Making",th:"Building an ecosystem",d:"A couple turn dead soil into a working farm over eight years, learning that every fix creates a new problem.",a:"5+",w:"Hulu, Prime Video",f:"Animals die — predation, illness, and one very sad pig storyline."},
+{t:"Salt Fat Acid Heat",y:2018,c:"Food & Making",th:"Four things",d:"Samin Nosrat travelling to explain the four elements of cooking. Joyful, and it makes kids want to cook.",a:"7+",w:"Netflix",f:""},
+{t:"Chef's Table",y:2015,c:"Food & Making",th:"Obsession, plated",d:"One chef per episode, shot like a feature film. Pick episodes rather than watching in order.",a:"9+",w:"Netflix",f:"Some episodes cover addiction, suicide of colleagues, or serious hardship. Choose the episode."},
+{t:"Street Food: Asia",y:2019,c:"Food & Making",th:"Cooks and cities",d:"Short episodes on individual street cooks and what got them there.",a:"8+",w:"Netflix",f:"Poverty and loss feature in several episodes."},
+{t:"Abstract: The Art of Design",y:2017,c:"Food & Making",th:"How designers think",d:"One designer per episode — shoes, typography, stage sets, illustration. Genuinely useful if anyone in the house makes things.",a:"10+",w:"Netflix",f:""},
+
+/* ---------- MUSIC & ART ---------- */
+{t:"Stop Making Sense",y:1984,c:"Music & Art",th:"A concert, built live",d:"Widely called the best concert film ever made. The stage is empty at the start and assembles piece by piece as the band plays.",a:"5+",w:"Max, Prime Video",f:""},
+{t:"The Beatles: Get Back",y:2021,c:"Music & Art",th:"Watching a song appear",d:"Eight hours of the Beatles in a room. The moment Paul writes the riff to 'Get Back' out of nothing is worth the whole thing.",a:"8+",w:"Disney+",f:"Constant smoking, occasional swearing, and long stretches of nothing happening."},
+{t:"Buena Vista Social Club",y:1999,c:"Music & Art",th:"Rediscovered musicians",d:"Wim Wenders finds a generation of Cuban musicians in their seventies and eighties and puts them on stage at Carnegie Hall.",a:"6+",w:"Prime Video, Criterion Channel",f:"Subtitled in places."},
+{t:"Amazing Grace",y:2018,c:"Music & Art",th:"Aretha, live",d:"Long-lost 1972 footage of Aretha Franklin recording a gospel album in a Los Angeles church.",a:"6+",w:"Hulu, Prime Video",f:""},
+{t:"20 Feet from Stardom",y:2013,c:"Music & Art",th:"Backup singers",d:"Oscar winner. The voices you've heard your whole life, and the people they belong to.",a:"8+",w:"Netflix, Prime Video",f:"Some music-industry adult content and mild language."},
+{t:"Summer of Soul",y:2021,c:"Music & Art",th:"The festival nobody saw",d:"Oscar winner. Fifty hours of 1969 Harlem Cultural Festival footage that sat in a basement for decades.",a:"9+",w:"Disney+, Hulu",f:"Civil-rights-era violence discussed; occasional language."},
+{t:"It Might Get Loud",y:2008,c:"Music & Art",th:"Three guitarists",d:"Jimmy Page, The Edge and Jack White in a room together with their instruments.",a:"9+",w:"Prime Video",f:"Mild language."},
+{t:"The Beatles: Eight Days a Week",y:2016,c:"Music & Art",th:"The touring years",d:"Ron Howard on what Beatlemania was actually like to be inside of.",a:"8+",w:"Disney+, Hulu",f:""},
+{t:"Muscle Shoals",y:2013,c:"Music & Art",th:"A studio in Alabama",d:"How a tiny town in Alabama ended up making some of the greatest records in America.",a:"10+",w:"Prime Video, Tubi",f:"Racism of the era, and a death in the family that opens the film."},
+{t:"Man with a Movie Camera",y:1929,c:"Music & Art",th:"What film can do",d:"Number one on Sight & Sound's greatest-documentaries poll. A silent, plotless, dazzling day in a Soviet city, full of tricks that still look invented yesterday.",a:"8+",w:"YouTube (public domain), Kanopy, Criterion Channel",f:"Includes a brief childbirth and a brief funeral. Silent, so easy to talk over."},
+{t:"Koyaanisqatsi",y:1982,c:"Music & Art",th:"No words at all",d:"Time-lapse cities and landscapes set to Philip Glass. No narration, no characters — kids either fall into it or ask to change it in four minutes.",a:"8+",w:"Prime Video, Criterion Channel",f:"A rocket explosion in slow motion at the end; some brief nudity in crowd footage."},
+{t:"Baraka",y:1992,c:"Music & Art",th:"The world, wordless",d:"Twenty-four countries, 70mm film, no dialogue. Some of the most beautiful footage ever shot.",a:"9+",w:"Prime Video, Tubi",f:"Includes a chicken-processing plant, funeral pyres, and slum footage — brief, unnarrated, and worth previewing."},
+
+/* ---------- HISTORY & SOCIETY ---------- */
+{t:"The National Parks: America's Best Idea",y:2009,c:"History",th:"Public land",d:"Ken Burns on how America decided to keep some places. Six episodes, and the most family-friendly thing Burns has made.",a:"8+",w:"PBS, Prime Video",f:""},
+{t:"Baseball",y:1994,c:"History",th:"A country through a game",d:"Ken Burns' nine-part history — as much about immigration and segregation as about baseball.",a:"9+",w:"PBS, Prime Video",f:"Racism of the era is covered directly, including the Negro Leagues and Robinson's integration."},
+{t:"The West",y:1996,c:"History",th:"Expansion, both sides",d:"Burns-produced, and unusually honest about what westward expansion cost the people already there.",a:"11+",w:"PBS, Prime Video",f:"Massacres and forced removal described in detail."},
+{t:"Eyes on the Prize",y:1987,c:"History",th:"Civil rights, first-hand",d:"The definitive civil rights series, told by the people who were there. Essential, and better than any textbook.",a:"11+",w:"HBO Max, PBS",f:"Archival footage of beatings, dogs, fire hoses and the aftermath of bombings and lynchings."},
+{sh:1,t:"Mighty Times: The Children's March",y:2004,c:"History",th:"Kids who marched",d:"Oscar-winning short about the Birmingham children who filled the jails in 1963 when the adults couldn't. Forty minutes, and about children their age.",a:"9+",w:"Learning for Justice (free), YouTube",f:"Police dogs, fire hoses and mass arrests of children."},
+{t:"They Shall Not Grow Old",y:2018,c:"History",th:"WWI, restored",d:"Peter Jackson colourising and restoring century-old footage until the soldiers look like people you know.",a:"12+",w:"HBO Max, Prime Video",f:"Corpses and severe wounds shown clearly. Extraordinary, but firmly a tween-plus film."},
+{t:"Nanook of the North",y:1922,c:"History",th:"The first documentary",d:"The film that started the form. On every canon list, and worth watching as an artefact as much as a document.",a:"8+",w:"YouTube (public domain), Kanopy",f:"Much of it was staged, and a real seal is killed. Genuinely useful for talking about what 'documentary' even means."},
+{t:"The Up Series",y:1964,c:"History",th:"Every seven years",d:"Fourteen British children filmed every seven years from age seven to sixty-three. Sight & Sound canon, and unlike anything else in cinema.",a:"11+",w:"BritBox, Prime Video",f:"Later instalments cover divorce, mental illness and death. Start with 7 Up and 7 Plus Seven, which are entirely watchable at nine."},
+{t:"The Gleaners and I",y:2000,c:"History",th:"What gets thrown away",d:"Agnès Varda filming people who collect what others discard. Ranked among the greatest docs of the century by the IDA.",a:"10+",w:"Criterion Channel, Kanopy",f:"Subtitled; poverty is the subject."},
+{t:"Life in a Day",y:2011,c:"History",th:"One day, everywhere",d:"80,000 clips filmed by ordinary people on a single day in 2010, cut into one film.",a:"10+",w:"YouTube (free)",f:"One clip shows the aftermath of a fatal accident; a few moments of adult content."},
+{t:"Crip Camp",y:2020,c:"History",th:"A camp that started a movement",d:"A summer camp for disabled teenagers in the seventies whose campers went on to force through the ADA. Oscar-nominated.",a:"12+",w:"Netflix, YouTube (free)",f:"Frank teenage talk about sex and drugs, and some swearing. Superb for a mature tween."},
+
+/* ---------- ACTION & EXTREME ---------- */
+{t:"Valley Uprising",y:2014,c:"Action & Extreme",th:"Yosemite's climbing counterculture",d:"Three generations of dirtbag climbers feuding with each other and the Park Service. Widely considered the best climbing documentary ever made — and it's free.",a:"11+",w:"Red Bull TV (free), Prime Video",f:"Drug use, nudity in archival footage, anti-authority attitude played for laughs, and several deaths."},
+{t:"The Alpinist",y:2021,c:"Action & Extreme",th:"Climbing without an audience",d:"Marc-André Leclerc soloing enormous alpine faces and refusing to tell anyone about it — including the film crew trying to follow him.",a:"10+",w:"Netflix, Prime Video",f:"He is killed near the end of filming. Handled with restraint, but it's the ending."},
+{t:"Meru",y:2015,c:"Action & Extreme",th:"The Shark's Fin",d:"Three climbers, two attempts, one unclimbed Himalayan route. Won the Sundance audience award.",a:"10+",w:"Prime Video, Tubi",f:"An avalanche burial and a serious head injury are recounted in detail."},
+{t:"The Art of Flight",y:2011,c:"Action & Extreme",th:"Snowboarding as cinema",d:"Travis Rice and a helicopter budget. The film that turned action-sports footage into something you'd watch on the biggest screen you own.",a:"6+",w:"Red Bull TV (free), Prime Video",f:"Avalanche near-misses and hard crashes, but nobody is badly hurt."},
+{t:"The Fourth Phase",y:2016,c:"Action & Extreme",th:"Following the water",d:"Rice's follow-up, structured around the North Pacific water cycle. Somehow both a snowboard film and a nature documentary.",a:"6+",w:"Red Bull TV (free), Prime Video",f:""},
+{t:"Mountain",y:2017,c:"Action & Extreme",th:"Why we climb at all",d:"Jennifer Peedom, the Australian Chamber Orchestra and Willem Dafoe reading Robert Macfarlane over some of the most extraordinary aerial footage ever assembled. Almost no dialogue.",a:"7+",w:"Prime Video, Kanopy",f:"Brief falls and crashes in the 'thrill-seeker' section."},
+{t:"River",y:2021,c:"Action & Extreme",th:"Water, everywhere",d:"The companion piece to Mountain, same orchestra, same wordless approach, this time following rivers.",a:"7+",w:"Prime Video, Kanopy",f:""},
+{t:"The Ridge",y:2014,c:"Action & Extreme",th:"A bike on a knife edge",d:"Danny MacAskill riding the Cuillin ridge on Skye. Seven minutes, free on YouTube, and the single best thing to show a kid who thinks documentaries are boring.",a:"5+",w:"YouTube (free)",f:"",sh:1},
+{t:"Danny MacAskill's Wee Day Out",y:2016,c:"Action & Extreme",th:"Trials riding, playfully",d:"MacAskill messing about in the Scottish countryside — hay bales, fences, a duck pond. Genuinely funny, and six minutes long.",a:"4+",w:"YouTube (free)",f:"",sh:1},
+{t:"Life Cycles",y:2010,c:"Action & Extreme",th:"Mountain bikes as objects",d:"Shot at 1,000 frames per second on a RED camera. A cult film among riders and one of the most beautiful sports films ever made.",a:"6+",w:"YouTube, Prime Video",f:""},
+{t:"Where the Trail Ends",y:2012,c:"Action & Extreme",th:"Freeride, unmapped",d:"Riders looking for unridden terrain in China, Argentina, Nepal and Utah.",a:"8+",w:"Red Bull TV (free), Prime Video",f:"Some very bad crashes."},
+{t:"unReal",y:2015,c:"Action & Extreme",th:"Bikes, dreamlike",d:"Anthill Films' surreal mountain-bike film — riders in impossible landscapes, animals watching.",a:"7+",w:"Prime Video, YouTube",f:""},
+{t:"180° South",y:2010,c:"Action & Extreme",th:"Sailing to Patagonia",d:"A young man retraces Yvon Chouinard and Doug Tompkins' 1968 road trip to Patagonia, by boat. Surfing, climbing, and a real argument about what land is for.",a:"8+",w:"Prime Video, Tubi",f:"Some swearing; a boat dismasting at sea."},
+{t:"DamNation",y:2014,c:"Action & Extreme",th:"Taking dams out",d:"Patagonia-funded, and unexpectedly thrilling — the case for removing dams, told by the people doing it.",a:"9+",w:"YouTube (free), Prime Video",f:"Some trespassing and mild language."},
+{t:"McConkey",y:2013,c:"Action & Extreme",th:"Invented his own sport",d:"Shane McConkey, who redesigned modern skis and then combined skiing with BASE jumping because nobody had.",a:"11+",w:"Red Bull TV (free), Prime Video",f:"He is killed doing a ski-BASE jump, and he leaves a young daughter. Openly about whether the risk was worth it."},
+{t:"Sunshine Superman",y:2014,c:"Action & Extreme",th:"Inventing BASE jumping",d:"Carl Boenish, the eccentric who invented BASE jumping and filmed it with rigs he built himself.",a:"11+",w:"Prime Video, Tubi",f:"Boenish dies on camera-adjacent footage; his widow's grief is central."},
+{t:"The Crash Reel",y:2013,c:"Action & Extreme",th:"What a head injury costs",d:"Snowboarder Kevin Pearce's traumatic brain injury and the family arguing about whether he should ever ride again. The honest counterweight to every other film in this category.",a:"11+",w:"HBO Max, Prime Video",f:"The crash and the recovery are both hard to watch. A brother with Down syndrome makes the case against going back — the best scene in the film."},
+{t:"The Man Who Skied Down Everest",y:1975,c:"Action & Extreme",th:"The original stunt",d:"Oscar winner. Yuichiro Miura skiing off Everest's South Col using a parachute to slow himself.",a:"11+",w:"Prime Video, Tubi",f:"Six Sherpas are killed during the expedition."},
+{t:"Under an Arctic Sky",y:2017,c:"Action & Extreme",th:"Surfing in a storm",d:"Chris Burkard taking six surfers to Iceland's north coast in the worst storm in twenty-five years, under the aurora.",a:"8+",w:"Prime Video, YouTube",f:"",sh:1},
+{t:"Take Every Wave: The Life of Laird Hamilton",y:2017,c:"Action & Extreme",th:"Big-wave obsession",d:"Laird Hamilton, tow-in surfing, and the cost of never being satisfied.",a:"10+",w:"Prime Video, Tubi",f:"Language, and frank material about his childhood and marriages."},
+{t:"View From a Blue Moon",y:2015,c:"Action & Extreme",th:"Surfing, in 4K",d:"John John Florence shot on cinema cameras in the Arctic, Africa and Hawaii. More visual poem than documentary.",a:"7+",w:"Prime Video, YouTube",f:""},
+{t:"Ride the Wave",y:2021,c:"Action & Extreme",th:"A fourteen-year-old on a big wave",d:"A Scottish teenager training to surf the biggest wave in his country. Small, obscure and quietly excellent — and about a kid.",a:"8+",w:"BBC iPlayer, festival streaming",f:""},
+{t:"Skywalkers: A Love Story",y:2024,c:"Action & Extreme",th:"Climbing skyscrapers illegally",d:"Two Russian rooftoppers scaling the world's tallest buildings without permission or ropes, and falling in love while doing it.",a:"11+",w:"Netflix",f:"Genuinely illegal and genuinely deadly. Worth being clear with kids that this one is not a model to follow."},
+{t:"The Deepest Breath",y:2023,c:"Action & Extreme",th:"Freediving",d:"A champion freediver and the safety diver who kept her alive. Extraordinary underwater footage.",a:"12+",w:"Netflix",f:"A death by drowning is the centre of the film, and blackouts underwater are shown."},
+{t:"Edge of the Earth",y:2022,c:"Action & Extreme",th:"Four first descents",d:"Teton Gravity Research and HBO — snowboarding, kayaking, climbing and surfing in places nobody has done them.",a:"10+",w:"HBO Max",f:"Serious near-misses; some language."},
+{t:"Being Evel",y:2015,c:"Action & Extreme",th:"The original daredevil",d:"Evel Knievel, produced by Johnny Knoxville. A properly complicated portrait rather than a hagiography.",a:"10+",w:"Prime Video, Tubi",f:"Knievel was violent and dishonest, and the film says so. Crash footage, some language."},
+{t:"Kilian Jornet: Path to Everest",y:2017,c:"Action & Extreme",th:"Up and down, fast",d:"The greatest mountain runner alive attempting Everest twice in a week with no oxygen and almost no gear.",a:"9+",w:"Prime Video, YouTube",f:"Subtitled in places; altitude sickness shown."},
+{t:"Race to the Summit",y:2023,c:"Action & Extreme",th:"A rivalry at altitude",d:"Ueli Steck and Dani Arnold pushing each other to faster and faster solo ascents of the Eiger.",a:"11+",w:"Netflix",f:"One of them is killed on Everest."},
+{t:"Chapter One",y:2015,c:"Action & Extreme",th:"Kiteboarding",d:"The first properly cinematic kiteboarding film — Cape Town, Maui, and a lot of air.",a:"7+",w:"YouTube, Prime Video",f:""},
+{t:"Any One of Us",y:2019,c:"Action & Extreme",th:"After the crash",d:"Mountain biker Paul Basagoitia's first year after a spinal cord injury, much of it filmed by him.",a:"12+",w:"HBO Max",f:"Unflinching about depression, catheters and despair. Excellent, and firmly for older kids."},
+
+/* ---------- OBSCURE GEMS & UNUSUAL PEOPLE ---------- */
+{t:"The Eagle Huntress",y:2016,c:"People",th:"A thirteen-year-old and a golden eagle",d:"Aisholpan, the first girl in twelve generations of her Kazakh family to train a hunting eagle. Narrated by Daisy Ridley and possibly the best kid-facing documentary of the last decade.",a:"6+",w:"Prime Video, Hulu",f:"Subtitled; a fox is hunted near the end."},
+{t:"The Last Repair Shop",y:2023,c:"People",th:"The people who fix the instruments",d:"Oscar winner for Best Documentary Short. Four repair technicians who keep 80,000 LA schoolchildren's instruments working. Free on YouTube and about forty minutes.",a:"7+",w:"YouTube (free), Disney+",f:"One technician's story involves fleeing violence in El Salvador.",sh:1},
+{t:"How Do You Measure a Year?",y:2022,c:"People",th:"One question, every birthday",d:"A father interviews his daughter on camera every birthday from two to eighteen. Twenty-nine minutes, and it will wreck you.",a:"6+",w:"HBO Max",f:"",sh:1},
+{t:"Instruments of a Beating Heart",y:2024,c:"People",th:"First graders and Beethoven",d:"A Tokyo first-grade class rehearsing Ode to Joy, and one girl determined to play the drum. Oscar-nominated short.",a:"5+",w:"PBS POV, Paramount+",f:"Subtitled.",sh:1},
+{t:"The Queen of Basketball",y:2021,c:"Sport",th:"The best player you never heard of",d:"Oscar winner. Lusia Harris, who scored the first basket in Olympic women's basketball and was drafted by the NBA. Twenty-two minutes.",a:"8+",w:"YouTube (free), New York Times Op-Docs",f:"",sh:1},
+{t:"Zion",y:2018,c:"Sport",th:"A wrestler born without legs",d:"Zion Clark, raised in foster care, wrestling in high school. Twelve minutes.",a:"8+",w:"Netflix",f:"Foster-care hardship is discussed.",sh:1},
+{t:"Learning to Skateboard in a Warzone (If You're a Girl)",y:2019,c:"Sport",th:"Skate school in Kabul",d:"Oscar winner. Afghan girls learning to read and to skateboard in the same building.",a:"9+",w:"HBO Max",f:"The war is present in the background; the school's fate after 2021 is worth explaining afterwards.",sh:1},
+{t:"Joe's Violin",y:2016,c:"Music & Art",th:"An instrument passed on",d:"Oscar-nominated short. A 91-year-old Holocaust survivor donates his violin, and it reaches a twelve-year-old in the Bronx.",a:"8+",w:"YouTube (free), New Yorker",f:"The Holocaust is discussed, gently and briefly.",sh:1},
+{t:"Nai Nai & Wài Pó",y:2023,c:"People",th:"Two grandmothers",d:"A filmmaker's two grandmothers, in their eighties, living together and having an enormous amount of fun. Oscar-nominated and joyful.",a:"6+",w:"Disney+, Hulu",f:"Anti-Asian violence is touched on near the end.",sh:1},
+{t:"An Honest Liar",y:2014,c:"People",th:"A magician who hunts frauds",d:"James Randi, escape artist turned professional debunker, spending decades exposing psychics and faith healers. Superb for teaching a kid how to think.",a:"9+",w:"Prime Video, Tubi",f:"A late twist about Randi's own partner involves identity fraud."},
+{t:"Bill Cunningham New York",y:2010,c:"People",th:"A photographer on a bicycle",d:"The New York Times street-fashion photographer, who lived in a filing cabinet and rode a bike everywhere. One of the most quietly moving portraits ever filmed.",a:"8+",w:"Prime Video, Kanopy",f:""},
+{t:"A Man Named Pearl",y:2006,c:"People",th:"A topiary garden",d:"A South Carolina man starts trimming his hedges to prove a point to neighbours who assumed he wouldn't keep his yard, and ends up with a garden people drive states to see.",a:"6+",w:"Prime Video, Tubi",f:"Casual racism from the neighbours is the film's starting point."},
+{t:"Buck",y:2011,c:"People",th:"The real horse whisperer",d:"Sundance winner. Buck Brannaman, who trains horses by understanding them, and who came out of a brutal childhood to do it.",a:"9+",w:"Prime Video, Tubi",f:"His father's abuse is described directly, and one dangerous horse has to be put down."},
+{t:"Dark Horse",y:2015,c:"Sport",th:"A village buys a racehorse",d:"A barmaid in a Welsh mining village convinces her neighbours to chip in £10 a week to breed a racehorse. It works. Sundance audience award.",a:"8+",w:"Prime Video, Tubi",f:"A serious injury to the horse mid-film."},
+{t:"Wordplay",y:2006,c:"People",th:"Crossword obsessives",d:"The New York Times crossword editor, the national tournament, and the people who take it extremely seriously. Funny and warm.",a:"8+",w:"Prime Video, Tubi",f:""},
+{t:"Jig",y:2011,c:"Sport",th:"Irish dance world championships",d:"Ten-year-olds through teenagers competing at the Irish Dancing World Championships, wigs and all.",a:"7+",w:"Prime Video, Tubi",f:"Some intense competition parenting."},
+{t:"Landfill Harmonic",y:2015,c:"Music & Art",th:"Instruments from garbage",d:"Children in a Paraguayan slum built on a landfill, playing violins and cellos made from oil drums and forks.",a:"7+",w:"Prime Video, Tubi",f:"Real poverty, and a flood that destroys homes."},
+{t:"On the Way to School",y:2013,c:"People",th:"The commute",d:"Four children in Kenya, Morocco, Argentina and India making genuinely dangerous journeys to school. Perfectly pitched for this age range.",a:"6+",w:"Prime Video, Kanopy",f:"Subtitled; elephants and long distances create real danger."},
+{t:"Sign Painters",y:2013,c:"Food & Making",th:"A dying trade",d:"The last hand-lettering shop painters in America, and why the craft is coming back.",a:"8+",w:"Prime Video, Vimeo",f:""},
+{t:"Exit Through the Gift Shop",y:2010,c:"Music & Art",th:"Is this even true?",d:"Banksy's film about a man filming Banksy. Nobody is entirely sure how much of it is real, which is the point.",a:"11+",w:"Prime Video, Tubi",f:"Language, vandalism presented as heroic, and a genuinely unreliable narrator."},
+{t:"Searching for Sugar Man",y:2012,c:"Music & Art",th:"A musician who didn't know",d:"Oscar winner. A Detroit folk singer who flopped in America and became bigger than the Rolling Stones in South Africa without ever finding out.",a:"10+",w:"Prime Video, Tubi",f:"Apartheid context; a rumoured on-stage suicide is discussed at length before being resolved."},
+{t:"Behind the Curve",y:2018,c:"People",th:"Flat-earthers, taken seriously",d:"A surprisingly kind film about people who believe the Earth is flat, including the moment their own experiment disproves them.",a:"10+",w:"Netflix",f:"Conspiracy thinking is presented sympathetically before being dismantled — best watched together."},
+{t:"Shirkers",y:2018,c:"People",th:"A stolen film",d:"A woman makes a film in Singapore at nineteen; her mentor vanishes with all the footage; twenty years later she finds it.",a:"11+",w:"Netflix",f:"The mentor's behaviour toward teenage girls is unsettling in retrospect."},
+{t:"Finders Keepers",y:2015,c:"People",th:"A custody battle over a leg",d:"A man finds an amputated human leg in a barbecue grill he bought at auction, and refuses to give it back. Completely true and unexpectedly tender.",a:"12+",w:"Prime Video, Tubi",f:"Addiction, a fatal plane crash, and a mummified limb shown on screen. Very good, very strange."},
+{t:"My Old School",y:2022,c:"People",th:"A thirty-year-old in Year 11",d:"A man enrols in a Scottish secondary school pretending to be sixteen, and nobody notices for two years. Alan Cumming lip-syncs the interview.",a:"12+",w:"Hulu, Prime Video",f:"The deception has a dark backstory involving deaths, revealed late."},
+{t:"Racing Dreams",y:2009,c:"Sport",th:"Twelve-year-old drivers",d:"Three kids on the national go-kart circuit that feeds NASCAR, and the families reorganising themselves around it.",a:"8+",w:"Prime Video, Tubi",f:"Family financial strain and one absent, incarcerated parent."},
+{t:"Top Spin",y:2014,c:"Sport",th:"Olympic table tennis hopefuls",d:"Three American teenagers trying to make the Olympic table tennis team, a sport nobody in the US takes seriously.",a:"8+",w:"Prime Video, Tubi",f:""},
+{t:"Chef Flynn",y:2018,c:"Food & Making",th:"A ten-year-old running a restaurant",d:"Flynn McGarry cooking tasting menus in his mother's living room at ten and running a New York pop-up at fifteen.",a:"8+",w:"Hulu, Prime Video",f:"His schooling and his mother's involvement raise questions the film doesn't resolve."},
+{t:"Boys State",y:2020,c:"History",th:"A thousand teenagers build a government",d:"Sundance grand jury winner. Texas seventeen-year-olds running a mock state election, and behaving exactly like the real thing.",a:"12+",w:"Apple TV+",f:"Political rhetoric including some ugly campaigning; occasional swearing."},
+{t:"Babies",y:2010,c:"People",th:"Four first years",d:"Four babies in Namibia, Mongolia, Tokyo and San Francisco from birth to first steps, with no narration at all. The single easiest documentary on this list for a three-year-old.",a:"3+",w:"Prime Video, Tubi",f:"Breastfeeding and one birth are shown matter-of-factly."},
+{t:"Aquarela",y:2018,c:"Nature",th:"Water, at 96 frames per second",d:"Ice collapsing, waves breaking, a hurricane. Almost wordless and shot at double the normal frame rate. Overwhelming on a good screen.",a:"9+",w:"Prime Video, Kanopy",f:"Opens with a car going through Lake Baikal ice and people drowning off-camera."},
+{t:"Cave of Forgotten Dreams",y:2010,c:"History",th:"32,000-year-old paintings",d:"Herzog gets three hours inside Chauvet Cave to film the oldest known art on Earth.",a:"8+",w:"Prime Video, Kanopy",f:"Herzog's closing tangent about albino crocodiles is odd; a few nude prehistoric figures."},
+{t:"Sepideh: Reaching for the Stars",y:2013,c:"Space & Science",th:"An Iranian girl and a telescope",d:"A teenager in rural Iran who wants to be an astronaut, and a family and town telling her to stop.",a:"10+",w:"Prime Video, Kanopy",f:"Subtitled; real pressure on her to marry instead."},
+{t:"The Wrecking Crew",y:2008,c:"Music & Art",th:"The band on every record",d:"The LA session musicians who secretly played on hundreds of sixties hits the credited bands didn't record.",a:"9+",w:"Prime Video, Tubi",f:""},
+{t:"Helvetica",y:2007,c:"Food & Making",th:"One typeface",d:"An entire feature about a single font, which somehow works. The gateway drug for anyone in the house who likes design.",a:"10+",w:"Prime Video, Kanopy",f:""}
+
+];
+
+/* ============================================================
+   THE CUT LIST — canon titles filtered out, with reasons
+   ============================================================ */
+const CUT=[
+["Shoah (1985)","Sight & Sound's #2 documentary ever. Nine and a half hours of Holocaust testimony. Not a children's film under any circumstances."],
+["Night and Fog (1956)","Canon top five. Thirty-two minutes of concentration camp footage. For a high-schooler, with preparation."],
+["The Act of Killing (2012)","Top 20 on Sight & Sound. Genocide perpetrators re-enacting their killings. Adults only."],
+["The Thin Blue Line (1988)","Canon top five. A murder case, re-enacted repeatedly. Fine at 15 or so."],
+["Grizzly Man (2005)","On every list, and it's about a man and his partner being killed and eaten by a bear. Absolutely not."],
+["Gimme Shelter (1970)","Canon. A killing occurs on camera at Altamont."],
+["Titicut Follies (1967)","Wiseman's canon film on a hospital for the criminally insane. Includes force-feeding and nudity."],
+["Hearts of Darkness (1991)","Great filmmaking documentary; drug use, a heart attack, and a real animal slaughter."],
+["Woodstock (1970)","Canon concert film. Nudity and open drug use throughout."],
+["The Last Waltz (1978)","Scorsese, canon. Cocaine references and language; save it for later."],
+["Paris Is Burning (1990)","Canon. Ballroom culture, sex work, and the murder of a subject."],
+["Sans Soleil (1983)","Canon top three. An essay film with no narrative — includes graphic animal slaughter footage."],
+["Harlan County USA (1976)","Canon. Striking miners, gunfire, language."],
+["The Cove (2009)","Oscar winner about dolphin hunting. The final sequence is one of the most graphic animal-killing scenes ever released. Traumatic for kids who love dolphins — which is all of them."],
+["Blackfish (2013)","Excellent and important, but includes trainer deaths and calves separated from mothers. Wait until 12 or 13, and watch together."],
+["Project Nim (2011)","Highly rated. A chimp raised as a human, then abandoned to labs. Deeply upsetting."],
+["Icarus (2017)","Oscar winner on doping. Adult throughout, and the subject's life is in danger."],
+["Minding the Gap (2018)","One of the best docs of the century. Skateboarding, but really about domestic abuse. Adults, or an older teen."],
+["Murderball (2005)","Terrific wheelchair rugby film — with enough sex talk and swearing to make it a solid 15."],
+["Dogtown and Z-Boys (2001)","Great skate history, heavy on language and drug references."],
+["Dear Zachary (2008)","Devastating by design. Do not put this on for a child."],
+["Hoop Dreams (1994)","Kept on the main list at 12+, but flagged here too: it's five hours and it does not soften anything."],
+["Super Size Me (2004)","Left off deliberately. Its framing of food and bodies isn't something worth handing a nine-year-old."],
+["13th (2016) / I Am Not Your Negro (2017)","Both canon, both essential, both contain lynching and police-violence footage. Around 13, with a parent."],
+["Food, Inc. (2008)","Good primer, but the slaughterhouse footage is the part kids remember."]
+];
+
+/* ============================================================
+   APP
+   ============================================================ */
+window.addEventListener("error",function(ev){
+  var n=document.getElementById("mode");
+  if(n){ n.className="modebar memory"; n.textContent="Something in this page failed to load: "+(ev.message||"unknown error"); }
+});
+/* PRESET — progress baked in when this file was generated.
+   Loads automatically if nothing is stored locally. */
+const PRESET="176w+.179w+.206w+";
+const KEY="doclog.v1";
+let state={};
+const mem={};
+let mode="memory";
+
+/* Three-layer persistence:
+   1. window.storage  — present when this runs inside Claude
+   2. localStorage    — present when the file is saved and opened in a browser
+   3. memory          — last resort, session only */
+const store={
+  async get(k){
+    if(window.storage){ try{ const r=await window.storage.get(k); mode="claude"; return r?r.value:null; }catch(e){ mode="claude"; return null; } }
+    try{ const v=localStorage.getItem(k); mode="local"; return v; }catch(e){}
+    mode="memory"; return mem[k]??null;
+  },
+  async set(k,v){
+    mem[k]=v;
+    if(window.storage){ try{ await window.storage.set(k,v); mode="claude"; return true; }catch(e){} }
+    try{ localStorage.setItem(k,v); mode="local"; return true; }catch(e){}
+    mode="memory"; return false;
+  }
+};
+
+function showMode(){
+  var n=document.getElementById("mode");
+  if(!n) return;
+  var code=encode();
+  var w=Object.values(state).filter(function(x){return x.w;}).length;
+  if(!code){
+    n.className="modebar";
+    n.innerHTML="<b>Your progress code appears here</b> once you mark something. It is a single code that always holds your whole history \u2014 send me the newest one and I will bake it into the file.";
+    return;
+  }
+  n.className="modebar live"+(mode==="local"||mode==="claude"?" quiet":"");
+  n.innerHTML="<div class=\"codehead\"><b>Progress code</b><span>"+w+" watched \u00b7 "+(mode==="memory"?"this view forgets on close \u2014 keep this code safe":"saved on this device \u2014 this code is your backup if you switch phones")+"</span></div>"
+    +"<textarea id=\"livecode\" readonly rows=\"2\">"+code+"</textarea>"
+    +"<button class=\"btn on\" id=\"copycode\">Copy code</button> <span id=\"copied\" class=\"copied\"></span>";
+  var btn=document.getElementById("copycode");
+  btn.addEventListener("click",function(){
+    var t=document.getElementById("livecode");
+    t.focus(); t.select();
+    var done=false;
+    try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(code); done=true; } }catch(e){}
+    if(!done){ try{ done=document.execCommand("copy"); }catch(e){} }
+    var c=document.getElementById("copied");
+    c.textContent = done ? "Copied \u2014 now paste it into the chat" : "Selected \u2014 long-press and choose Copy";
+  });
+}
+
+const el=s=>document.querySelector(s);
+const out=el("#out");
+let filters={q:"",cat:"",age:"",unseen:false,flag:false,short:false};
+
+D.forEach((d,i)=>d.id="d"+i);
+
+function slug(t){return encodeURIComponent(t);}
+function ageNum(a){return parseInt(a)||0;}
+
+/* build filter options */
+[...new Set(D.map(d=>d.c))].sort().forEach(c=>{
+  const o=document.createElement("option");o.value=c;o.textContent=c;el("#fCat").appendChild(o);
+});
+["3+","5+","7+","9+","11+"].forEach(a=>{
+  const o=document.createElement("option");o.value=a;o.textContent="Suitable at "+a;el("#fAge").appendChild(o);
+});
+
+function match(d){
+  const q=filters.q.toLowerCase();
+  if(q && !(d.t+" "+d.th+" "+d.d+" "+d.c).toLowerCase().includes(q)) return false;
+  if(filters.cat && d.c!==filters.cat) return false;
+  if(filters.age && ageNum(d.a)>ageNum(filters.age)) return false;
+  const s=state[d.id]||{};
+  if(filters.unseen && s.w) return false;
+  if(filters.flag && !d.f) return false;
+  if(filters.short && !d.sh) return false;
+  return true;
+}
+
+function render(){
+  const shown=D.filter(match);
+  const byCat={};
+  shown.forEach(d=>{(byCat[d.c]=byCat[d.c]||[]).push(d);});
+  const order=["Nature","Ocean","Space & Science","Sport","Action & Extreme","Adventure","People","Food & Making","Music & Art","History"];
+  let html="";
+  order.filter(c=>byCat[c]).forEach(c=>{
+    html+=`<div class="sec"><h2>${c}</h2><i></i><span>${byCat[c].length}</span></div><div class="grid">`;
+    byCat[c].forEach(d=>{
+      const s=state[d.id]||{};
+      html+=`<article class="card ${s.w?"done":""}" data-id="${d.id}">
+        <div class="stamp"><b>SEEN</b><i>${s.d||""}</i></div>
+        <div class="num">${d.y}</div>
+        <h3>${d.t}</h3>
+        <div class="meta">
+          <span class="chip age">${d.a}</span>
+          <span class="chip theme">${d.th}</span>
+          ${d.sh?'<span class="chip short">Short</span>':""}
+        </div>
+        <p class="blurb">${d.d}</p>
+        ${d.f?`<span class="flag"><b>Heads-up</b>${d.f}</span>`:""}
+        <p class="where"><b>Where to watch</b>${d.w} · <a href="https://www.justwatch.com/us/search?q=${slug(d.t)}" target="_blank" rel="noopener">check now</a></p>
+        <div class="acts">
+          <button class="tog ${s.w?"on":""}" data-act="w">${s.w?"✓ Watched":"Mark watched"}</button>
+          <div class="rate">
+            <button data-act="up" class="${s.r==1?"on":""}" title="Loved it">👍</button>
+            <button data-act="mid" class="${s.r==0?"on":""}" title="It was fine">😐</button>
+            <button data-act="dn" class="${s.r==-1?"on":""}" title="Not for us">👎</button>
+          </div>
+        </div>
+      </article>`;
+    });
+    html+="</div>";
+  });
+  if(typeof showMode==="function") setTimeout(showMode,0);
+  out.innerHTML = shown.length? html : `<p class="empty">Nothing matches those filters. Try widening the age or clearing the search.</p>`;
+  tally();
+}
+
+function tally(){
+  const w=Object.values(state).filter(s=>s.w).length;
+  const l=Object.values(state).filter(s=>s.r===1).length;
+  el("#tWatched").textContent=w;
+  el("#tTotal").textContent=D.length;
+  el("#tLoved").textContent=l;
+  el("#tPct").textContent=Math.round(w/D.length*100)+"%";
+}
+
+out.addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]"); if(!b) return;
+  const id=b.closest(".card").dataset.id;
+  const s=state[id]||(state[id]={});
+  const a=b.dataset.act;
+  if(a==="w"){
+    s.w=!s.w;
+    s.d=s.w? new Date().toLocaleDateString(undefined,{month:"short",day:"numeric"}) : "";
+  }
+  if(a==="up") s.r = s.r===1?null:1;
+  if(a==="mid") s.r = s.r===0?null:0;
+  if(a==="dn") s.r = s.r===-1?null:-1;
+  save(); render();
+});
+
+function save(){ store.set(KEY, JSON.stringify(state)).then(showMode); }
+
+el("#q").addEventListener("input",e=>{filters.q=e.target.value;render();});
+el("#fCat").addEventListener("change",e=>{filters.cat=e.target.value;render();});
+el("#fAge").addEventListener("change",e=>{filters.age=e.target.value;render();});
+el("#fUnseen").addEventListener("click",e=>{filters.unseen=!filters.unseen;e.target.classList.toggle("on");render();});
+el("#fFlag").addEventListener("click",e=>{filters.flag=!filters.flag;e.target.classList.toggle("on");render();});
+
+el("#fShort").addEventListener("click",e=>{filters.short=!filters.short;e.target.classList.toggle("on");render();});
+el("#pick").addEventListener("click",()=>{
+  const pool=D.filter(d=>match(d)&&!(state[d.id]||{}).w);
+  if(!pool.length){alert("You've watched everything that matches. Widen the filters.");return;}
+  const p=pool[Math.floor(Math.random()*pool.length)];
+  filters.q=p.t; el("#q").value=p.t; render();
+  window.scrollTo({top:el("#out").offsetTop-60,behavior:"smooth"});
+});
+
+function encode(){
+  const parts=[];
+  D.forEach((d,i)=>{
+    const st=state[d.id]; if(!st) return;
+    let f=""; if(st.w) f+="w";
+    if(st.r===1) f+="+"; else if(st.r===0) f+="~"; else if(st.r===-1) f+="-";
+    if(f) parts.push(i+f);
+  });
+  return parts.join(".");
+}
+function decode(code){
+  const next={};
+  code.trim().replace(/\s/g,"").split(".").forEach(tok=>{
+    const m=tok.match(/^(\d+)([w+~-]*)$/); if(!m) return;
+    const d=D[+m[1]]; if(!d) return;
+    const st={};
+    if(m[2].includes("w")) st.w=true;
+    if(m[2].includes("+")) st.r=1;
+    else if(m[2].includes("~")) st.r=0;
+    else if(m[2].includes("-")) st.r=-1;
+    if(st.w) st.d="saved";
+    next[d.id]=st;
+  });
+  return next;
+}
+
+function panel(title,body){
+  const old=document.getElementById("panel"); if(old) old.remove();
+  const p=document.createElement("div"); p.id="panel"; p.className="panel";
+  p.innerHTML=`<h4>${title}</h4>${body}`;
+  document.getElementById("mode").after(p);
+  try{ if(p.scrollIntoView) p.scrollIntoView({block:"nearest"}); }catch(e){}
+  return p;
+}
+
+el("#exp").addEventListener("click",()=>{
+  const code=encode();
+  if(!code){panel("Nothing to save yet","<p>Mark something watched first.</p>");return;}
+  const n=Object.values(state).filter(x=>x.w).length;
+  const p=panel("Your progress code",
+    `<p>${n} watched. Copy this and <b>send it to me as a chat message</b> — the conversation is the only thing here that actually remembers. Next time you open the logbook, tap Load progress and paste it back.</p>
+     <textarea id="codeout" readonly rows="3">${code}</textarea>
+     <button class="btn" id="closep">Done</button>`);
+  const ta=p.querySelector("#codeout"); ta.focus(); ta.select();
+  p.querySelector("#closep").onclick=()=>p.remove();
+});
+
+el("#imp").addEventListener("click",()=>{
+  const p=panel("Load a progress code",
+    `<p>Paste the code you saved earlier.</p>
+     <textarea id="codein" rows="3" placeholder="e.g. 3w+.17w.42w-"></textarea>
+     <button class="btn on" id="dorestore">Restore</button>
+     <button class="btn" id="closep2">Cancel</button>`);
+  p.querySelector("#closep2").onclick=()=>p.remove();
+  p.querySelector("#dorestore").onclick=()=>{
+    const v=p.querySelector("#codein").value;
+    const next=decode(v);
+    if(!Object.keys(next).length){alert("That code couldn't be read. Check you copied all of it.");return;}
+    state=next; save(); render(); p.remove();
+  };
+});
+
+el("#cuts").innerHTML = CUT.map(c=>`<div class="cut"><b>${c[0]}</b><span>${c[1]}</span></div>`).join("");
+
+(async()=>{
+  try{
+    const raw=await store.get(KEY);
+    if(raw){ try{ state=JSON.parse(raw); }catch(e){ state={}; } }
+    if(!Object.keys(state).length && PRESET){ state=decode(PRESET); }
+  }catch(e){ mode="memory"; }
+  render();
+  showMode();
+})();
+</script>
